@@ -47,5 +47,12 @@
 		<script src="/static/framer/helpers.js"></script>
 		<script src="/static/framer/framer.js"></script>
 		<script src="/static/app.js"></script>
+		<script>
+			{% if kkoks != None %}
+				{% for k in kkoks %}
+			  	createKkok({{ k.family_id }}, {{ k.time }});
+			  {% endfor %}
+			{% endif %}
+		</script>
 	</body>
 </html>
