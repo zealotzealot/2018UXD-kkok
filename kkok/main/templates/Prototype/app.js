@@ -16,6 +16,14 @@ let currentTime = 0;
 
 
 
+// Initialize time
+
+if (!IS_TEST){
+  currentTime = (new Date()).getTime() - new Date(2000, 1, 1, 0, 0).getTime();
+}
+
+
+
 // Style mode functions
 
 let styleKkokList = [
