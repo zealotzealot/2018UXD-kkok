@@ -4,7 +4,7 @@ from django.db import models
 
 
 class Kkok(models.Model):
-  session = models.IntegerField()
+  sessionId = models.IntegerField()
   time = models.DateTimeField(auto_now_add = True)
   familyId = models.IntegerField()
 
