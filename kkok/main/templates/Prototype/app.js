@@ -225,7 +225,7 @@ if (!IS_TEST) {
 
 // Interval functions
 
-Utils.interval(1.0/1000, function() {
+Utils.interval(1.0/60, function() {
   let now = performance.now();
   let timeDiff = (now - prevNow) * Math.pow(10, speedSlider.value);
   prevNow = now;
@@ -246,9 +246,16 @@ Utils.interval(1.0/1000, function() {
   }
 });
 
-Utils.interval(1.0/30, function() {
+let updateCount = 0;
+Utils.interval(1.0/10, function() {
+  updateCount++;
+
   for (let i=0; i<kkoks.length; i++) {
     let k = kkoks[i];
+
+    if (k.opacity<0.1 && i%5!=updateCount%5)
+      continue;
+
     let timeDiff = (currentTime - k._data_time) / DAY_MILLIS * 24;
     k.opacity = Math.max(Math.pow(0.85, timeDiff), 0.1*Math.pow(0.995, timeDiff));
   }
