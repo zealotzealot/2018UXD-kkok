@@ -246,5 +246,4 @@ Utils.interval(1.0/30, function() {
     else
       break;
   }
-  console.log(kkoks.length);
 });
