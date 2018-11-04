@@ -270,7 +270,7 @@ Utils.interval(1.0/10, function() {
 });
 
 if (!IS_TEST) {
-  Utils.interval(0.5, function() {
+  Utils.interval(1.0 / 5, function() {
     $.ajax({
       type: "POST",
       url: "/ajax/kkoks/load/",
