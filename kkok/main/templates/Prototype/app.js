@@ -13,6 +13,7 @@ Screen.backgroundColor = "#ff0";
 
 let prevNow = 0;
 let currentTime = 0;
+let lastLoaded = 0;
 
 
 
@@ -20,6 +21,7 @@ let currentTime = 0;
 
 if (!IS_TEST){
   currentTime = (new Date()).getTime() - new Date(2000, 0, 1, 0, 0).getTime();
+  lastLoaded = currentTime;
 }
 
 
@@ -246,4 +248,24 @@ Utils.interval(1.0/30, function() {
     else
       break;
   }
+});
+
+Utils.interval(0.5, function() {
+  $.ajax({
+    type: "POST",
+    url: "/ajax/kkoks/load/",
+    data: {
+      session_id: SESSION_ID,
+      family_id: FAMILY_ID,
+      time: lastLoaded,
+    },
+    success: function(data) {
+      for (let i=0; i<data.length; i++) {
+        let d = data[i];
+        createKkok(d.family_id, d.time);
+        if (d.time > lastLoaded)
+          lastLoaded = d.time+1;
+      }
+    }
+  });
 });

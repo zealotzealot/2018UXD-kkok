@@ -41,3 +41,22 @@ def createKkokView(request):
   models.Kkok.objects.create(sessionId=sessionId, familyId=familyId, time=time)
 
   return JsonResponse({})
+
+
+
+@csrf_exempt
+@require_http_methods(["POST"])
+def loadKkokView(request):
+  baseTime = datetime.datetime(2000, 1, 1, 0, 0)
+
+  sessionId = request.POST["session_id"]
+  familyId = request.POST["family_id"]
+  time = baseTime + datetime.timedelta(milliseconds=float(request.POST["time"]))
+
+  data = [{
+    "family_id": k.familyId,
+    "time": int((k.time.timestamp() - baseTime.timestamp()) * 1000)
+  } for k in models.Kkok.objects.filter(sessionId=sessionId, time__gt = time).exclude(familyId=familyId)]
+
+  return JsonResponse(data, safe=False)
+

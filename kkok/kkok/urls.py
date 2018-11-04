@@ -22,4 +22,5 @@ urlpatterns = [
     path('product/<int:sessionId>/<int:familyId>/', views.productView),
     path('test/', views.testView),
     path('ajax/kkoks/create/', views.createKkokView),
+    path('ajax/kkoks/load/', views.loadKkokView),
 ]
