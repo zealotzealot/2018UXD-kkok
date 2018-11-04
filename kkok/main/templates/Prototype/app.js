@@ -122,6 +122,15 @@ styleDevice(device);
 if (!IS_TEST) {
   device.onClick(function() {
     createKkok(FAMILY_ID, currentTime);
+    $.ajax({
+      type: "POST",
+      url: "/ajax/kkoks/create/",
+      data: {
+        session_id: SESSION_ID,
+        family_id: FAMILY_ID,
+        time: currentTime,
+      },
+    });
   });
 }
 

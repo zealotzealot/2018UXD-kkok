@@ -13,6 +13,8 @@
 		<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/static/icon/apple-touch-icon-72x72-precomposed.png">
 		<link rel="apple-touch-icon-precomposed" href="/static/icon/apple-touch-icon-precomposed.png">
 
+		<script src="/static/jquery-3.3.1.min.js"></script>
+
 		<style type="text/css" media="/static/screen">
 
 		* {
@@ -42,6 +44,9 @@
 			const IS_TEST = {{ is_test }};
 			{% if family_id != None %}
 			  const FAMILY_ID = {{ family_id }};
+			{% endif %}
+			{% if session_id != None %}
+			  const SESSION_ID = {{ session_id }};
 			{% endif %}
 		</script>
 		<script src="/static/framer/helpers.js"></script>
