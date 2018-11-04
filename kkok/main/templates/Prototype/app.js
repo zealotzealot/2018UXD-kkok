@@ -111,6 +111,11 @@ let device = new Layer({
   shadowBlur: 12,
 });
 styleDevice(device);
+if (!IS_TEST) {
+  device.onClick(function() {
+    createKkok(0, currentTime);
+  });
+}
 
 let bar = new Layer({
   parent: device,
@@ -176,6 +181,13 @@ for (let i=0; i<FAMILY_COLORS.length; i++) {
   });
 
   kkokButtons.push(b);
+}
+
+if (!IS_TEST) {
+  speedSlider.visible = false;
+  autoButton.visible = false;
+  for (let i=0; i<kkokButtons.length; i++)
+    kkokButtons[i].visible = false;
 }
 
 
