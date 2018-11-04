@@ -1,5 +1,5 @@
 const DAY_MILLIS = 1000 * 60 * 60 * 24;
-const FAMILY_COLORS = ["FF0000", "00FF00", "0000FF"];
+const FAMILY_COLORS = ["EE66DD", "22CCEE", "EEDD11"];
 
 const DEVICE_SIZE = 400;
 const BUTTON_SIZE = 30;
@@ -8,8 +8,6 @@ const PADDING = 16;
 const AUTO_PERIOD = 1000 * 60 * 20;
 
 const STYLE_MODE = 0;
-
-Screen.backgroundColor = "#ff0";
 
 let prevNow = 0;
 let currentTime = 0;
@@ -114,7 +112,7 @@ let createKkok = function(colorIdx, time) {
   kkok.animate({
     scale: 1,
     options: {
-      time: 0.3 / Math.pow(10, speedSlider.value),
+      time: 0.5 / Math.pow(10, speedSlider.value),
     }
   })
 };
@@ -131,7 +129,7 @@ let device = new Layer({
   backgroundColor: "#FFFFFF",
   shadowColor: "#DDDDDD",
   shadowX: 0,
-  shadowY: 6,
+  shadowY: 4,
   shadowBlur: 12,
 });
 styleDevice(device);
@@ -152,7 +150,7 @@ if (!IS_TEST) {
 
 let bar = new Layer({
   parent: device,
-  backgroundColor: "#AAAAAA",
+  backgroundColor: "#EEEEEE",
 })
 styleBar(bar);
 
