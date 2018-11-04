@@ -4,6 +4,7 @@ from django.shortcuts import render
 def productView(request, session, familyId):
   return render(request, "Prototype/index.html", {
     "is_test": "false",
+    "family_id": familyId,
   })
 
 

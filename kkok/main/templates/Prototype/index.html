@@ -40,6 +40,9 @@
 	<body>
 		<script>
 			const IS_TEST = {{ is_test }};
+			{% if family_id != None %}
+			  const FAMILY_ID = {{ family_id }};
+			{% endif %}
 		</script>
 		<script src="/static/framer/helpers.js"></script>
 		<script src="/static/framer/framer.js"></script>

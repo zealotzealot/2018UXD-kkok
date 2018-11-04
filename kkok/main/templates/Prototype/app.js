@@ -113,7 +113,7 @@ let device = new Layer({
 styleDevice(device);
 if (!IS_TEST) {
   device.onClick(function() {
-    createKkok(0, currentTime);
+    createKkok(FAMILY_ID, currentTime);
   });
 }
 
