@@ -33,9 +33,9 @@ let styleKkokList = [
     kkok.width = 2;
     kkok.height = DEVICE_SIZE / 2 / 4;
     kkok.x = Align.center;
-    kkok.y = Align.top;
+    kkok.y = Align.top(DEVICE_SIZE / 2 / 6);
     kkok.originX = 0.5;
-    kkok.originY = 4;
+    kkok.originY = 4 - (4 / 6);
     kkok.rotation = 360 * (kkok._data_time % DAY_MILLIS) / DAY_MILLIS;
   },
   function(kkok) {
@@ -103,6 +103,20 @@ let createKkok = function(colorIdx, time) {
   kkok._data_time = time;
   styleKkok(kkok);
   kkoks.push(kkok);
+
+  let scale;
+  if (colorIdx == FAMILY_ID) {
+    kkok.scale = 0;
+  }
+  else {
+    kkok.scale = 1 / (1 - 1/6);
+  }
+  kkok.animate({
+    scale: 1,
+    options: {
+      time: 0.3,
+    }
+  })
 };
 
 
