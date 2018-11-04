@@ -105,7 +105,7 @@ let createKkok = function(colorIdx, time) {
   kkoks.push(kkok);
 
   let scale;
-  if (colorIdx == FAMILY_ID) {
+  if (IS_TEST || colorIdx == FAMILY_ID) {
     kkok.scale = 0;
   }
   else {
@@ -114,7 +114,7 @@ let createKkok = function(colorIdx, time) {
   kkok.animate({
     scale: 1,
     options: {
-      time: 0.3,
+      time: 0.3 / Math.pow(10, speedSlider.value),
     }
   })
 };
@@ -264,22 +264,24 @@ Utils.interval(1.0/30, function() {
   }
 });
 
-Utils.interval(0.5, function() {
-  $.ajax({
-    type: "POST",
-    url: "/ajax/kkoks/load/",
-    data: {
-      session_id: SESSION_ID,
-      family_id: FAMILY_ID,
-      time: lastLoaded,
-    },
-    success: function(data) {
-      for (let i=0; i<data.length; i++) {
-        let d = data[i];
-        createKkok(d.family_id, d.time);
-        if (d.time > lastLoaded)
-          lastLoaded = d.time+1;
+if (!IS_TEST) {
+  Utils.interval(0.5, function() {
+    $.ajax({
+      type: "POST",
+      url: "/ajax/kkoks/load/",
+      data: {
+        session_id: SESSION_ID,
+        family_id: FAMILY_ID,
+        time: lastLoaded,
+      },
+      success: function(data) {
+        for (let i=0; i<data.length; i++) {
+          let d = data[i];
+          createKkok(d.family_id, d.time);
+          if (d.time > lastLoaded)
+            lastLoaded = d.time+1;
+        }
       }
-    }
+    });
   });
-});
+}
