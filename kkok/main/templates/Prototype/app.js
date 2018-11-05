@@ -1,7 +1,7 @@
 const DAY_MILLIS = 1000 * 60 * 60 * 24;
 const FAMILY_COLORS = ["EE66DD", "22CCEE", "EEDD11", "55CC33"];
 
-const DEVICE_SIZE = 400;
+const DEVICE_SIZE = 500;
 const BUTTON_SIZE = 30;
 const PADDING = 16;
 
