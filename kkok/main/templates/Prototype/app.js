@@ -15,6 +15,14 @@ let lastLoaded = 0;
 
 
 
+// Disable double tap zooming
+$(this).bind('touchend', function(e) {
+  e.preventDefault();
+  $(this).click();
+});
+
+
+
 // Initialize time
 
 if (!IS_TEST){
