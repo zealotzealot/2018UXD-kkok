@@ -49,10 +49,28 @@ let styleKkokList = [
 let styleKkok = styleKkokList[STYLE_MODE];
 
 let styleDeviceList = [
-  function(device) {
+  function(device, deviceReceiveArea, deviceKkokArea, deviceSendArea) {
     device.borderRadius = DEVICE_SIZE/2;
+
+    deviceReceiveArea.width = DEVICE_SIZE;
+    deviceReceiveArea.height = DEVICE_SIZE;
+    deviceReceiveArea.x = Align.center;
+    deviceReceiveArea.y = Align.center;
+    deviceReceiveArea.borderRadius = DEVICE_SIZE / 2;
+
+    deviceKkokArea.width = DEVICE_SIZE * (1 - 1/6);
+    deviceKkokArea.height = DEVICE_SIZE * (1 - 1/6);
+    deviceKkokArea.x = Align.center;
+    deviceKkokArea.y = Align.center;
+    deviceKkokArea.borderRadius = DEVICE_SIZE * (1 - 1/6) / 2;
+
+    deviceSendArea.width = DEVICE_SIZE * (1 - 1/6 - 1/4);
+    deviceSendArea.height = DEVICE_SIZE * (1 - 1/6 - 1/4);
+    deviceSendArea.x = Align.center;
+    deviceSendArea.y = Align.center;
+    deviceSendArea.borderRadius = DEVICE_SIZE * (1 - 1/6 - 1/4) / 2;
   },
-  function(device) {
+  function(device, deviceReceiveArea, deviceKkokArea, deviceSendArea) {
     device.borderRadius = DEVICE_SIZE/20;
   },
 ]
@@ -115,6 +133,21 @@ let createKkok = function(colorIdx, time) {
       time: 0.5 / Math.pow(10, speedSlider.value),
     }
   })
+
+  let targetArea;
+  if (IS_TEST || colorIdx == FAMILY_ID) {
+    targetArea = deviceSendArea;
+  }
+  else {
+    targetArea = deviceReceiveArea;
+  }
+  targetArea.backgroundColor = FAMILY_COLORS[colorIdx];
+  targetArea.animate({
+    backgroundColor: "FFFFFF",
+    options: {
+      time: 0.5 / Math.pow(10, speedSlider.value),
+    }
+  });
 };
 
 
@@ -132,7 +165,19 @@ let device = new Layer({
   shadowY: 4,
   shadowBlur: 12,
 });
-styleDevice(device);
+let deviceReceiveArea = new Layer({
+  parent: device,
+  backgroundColor: "#FFFFFF",
+});
+let deviceKkokArea = new Layer({
+  parent: device,
+  backgroundColor: "#FFFFFF",
+});
+let deviceSendArea = new Layer({
+  parent: device,
+  backgroundColor: "#FFFFFF",
+});
+styleDevice(device, deviceReceiveArea, deviceKkokArea, deviceSendArea);
 if (!IS_TEST) {
   device.onClick(function() {
     createKkok(FAMILY_ID, currentTime);
