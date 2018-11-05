@@ -24,6 +24,20 @@ if (!IS_TEST){
 
 
 
+// Initialize time area
+
+let timeAreas = [];
+for (let i=0; i<8; i++) {
+  timeAreas.push({
+    time: DAY_MILLIS * Math.random(),
+    familyAvailable: FAMILY_COLORS.map(x => (Math.random()<0.2))
+  });
+}
+timeAreas.sort((a, b) => (a.time - b.time));
+console.log(timeAreas);
+
+
+
 // Style mode functions
 
 let styleKkokList = [
@@ -270,6 +284,22 @@ if (!IS_TEST) {
 
 // Interval functions
 
+let randomKkok = function(startTime, endTime) {
+  let targetFamily = Math.floor(Math.random() * FAMILY_COLORS.length);
+  let targetTime = startTime + (endTime - startTime) * Math.random();
+
+  let i;
+  for (i=0; i<timeAreas.length; i++) {
+    if (timeAreas[i].time > targetTime%DAY_MILLIS)
+      break;
+  }
+
+  if ((timeAreas[i%timeAreas.length].familyAvailable[targetFamily] == false)
+    && (Math.random() > 0.1))
+    return;
+
+  createKkok(targetFamily, targetTime);
+};
 Utils.interval(1.0/60, function() {
   let now = performance.now();
   let timeDiff = (now - prevNow) * Math.pow(10, speedSlider.value);
@@ -280,14 +310,11 @@ Utils.interval(1.0/60, function() {
   moveBar(bar);
 
   if (autoOn) {
-    let number = Math.floor(timeDiff / AUTO_PERIOD);
-    if (Math.random() < (timeDiff % AUTO_PERIOD) / AUTO_PERIOD)
-      number += 1;
-    for (let i=0; i<number; i++) {
-      let targetFamily = Math.floor(Math.random() * FAMILY_COLORS.length)
-      let targetTime = currentTime - timeDiff * Math.random();
-      createKkok(targetFamily, targetTime);
-    }
+    let t;
+    for (t=currentTime-timeDiff; t+AUTO_PERIOD<currentTime; t+=AUTO_PERIOD)
+      randomKkok(t, t+AUTO_PERIOD);
+    if (Math.random()*AUTO_PERIOD < currentTime-t)
+      randomKkok(t, currentTime);
   }
 });
 
