@@ -5,7 +5,7 @@ const DEVICE_SIZE = 400;
 const BUTTON_SIZE = 30;
 const PADDING = 16;
 
-const AUTO_PERIOD = 1000 * 60 * 20;
+const AUTO_PERIOD = 1000 * 60 * 4;
 
 const STYLE_MODE = 0;
 
@@ -30,7 +30,7 @@ let timeAreas = [];
 for (let i=0; i<8; i++) {
   timeAreas.push({
     time: DAY_MILLIS * Math.random(),
-    familyAvailable: FAMILY_COLORS.map(x => (Math.random()<0.2))
+    familyAvailable: FAMILY_COLORS.map(x => (Math.random()<0.15))
   });
 }
 timeAreas.sort((a, b) => (a.time - b.time));
@@ -295,7 +295,7 @@ let randomKkok = function(startTime, endTime) {
   }
 
   if ((timeAreas[i%timeAreas.length].familyAvailable[targetFamily] == false)
-    && (Math.random() > 0.1))
+    && (Math.random() > 0.02))
     return;
 
   createKkok(targetFamily, targetTime);
@@ -329,7 +329,7 @@ Utils.interval(1.0/10, function() {
       continue;
 
     let timeDiff = (currentTime - k._data_time) / DAY_MILLIS * 24;
-    k.opacity = Math.max(Math.pow(0.85, timeDiff), 0.1*Math.pow(0.995, timeDiff));
+    k.opacity = Math.max(Math.pow(0.86, timeDiff), 0.1*Math.pow(0.995, timeDiff));
   }
   while (kkoks.length > 0) {
     if (kkoks[0].opacity < 0.01) {
