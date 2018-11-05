@@ -356,7 +356,7 @@ Utils.interval(1.0/10, function() {
       continue;
 
     let timeDiff = (currentTime - k._data_time) / DAY_MILLIS * 24;
-    k.opacity = Math.max(Math.pow(0.86, timeDiff), 0.1*Math.pow(0.995, timeDiff));
+    k.opacity = Math.max(Math.pow(0.9, timeDiff), 0.1*Math.pow(0.995, timeDiff));
   }
   while (kkoks.length > 0) {
     if (kkoks[0].opacity < 0.01) {
