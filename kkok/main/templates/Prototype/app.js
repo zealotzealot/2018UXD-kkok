@@ -282,6 +282,26 @@ if (!IS_TEST) {
 
 
 
+// Key press function
+
+document.addEventListener("keypress", function(event) {
+  if (event.keyCode == 32) {
+    createKkok(FAMILY_ID, currentTime);
+    $.ajax({
+      type: "POST",
+      url: "/ajax/kkoks/create/",
+      data: {
+        session_id: SESSION_ID,
+        family_id: FAMILY_ID,
+        time: currentTime,
+      },
+    });
+  }
+
+});
+
+
+
 // Interval functions
 
 let randomKkok = function(startTime, endTime) {
