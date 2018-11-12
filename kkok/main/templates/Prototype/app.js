@@ -43,64 +43,22 @@ timeAreas.sort((a, b) => (a.time - b.time));
 
 
 
-// Style mode functions
-let styleKkok = function(kkok) {
-  kkok.width = 2;
-  kkok.height = DEVICE_SIZE / 2 / 4;
-  kkok.x = Align.center;
-  kkok.y = Align.top(DEVICE_SIZE / 2 / 6);
-  kkok.originX = 0.5;
-  kkok.originY = 4 - (4 / 6);
-  kkok.rotation = 360 * (kkok._data_time % DAY_MILLIS) / DAY_MILLIS;
-};
-
-let styleDevice = function(device, deviceReceiveArea, deviceKkokArea, deviceSendArea) {
-  device.borderRadius = DEVICE_SIZE/2;
-
-  deviceReceiveArea.width = DEVICE_SIZE;
-  deviceReceiveArea.height = DEVICE_SIZE;
-  deviceReceiveArea.x = Align.center;
-  deviceReceiveArea.y = Align.center;
-  deviceReceiveArea.borderRadius = DEVICE_SIZE / 2;
-
-  deviceKkokArea.width = DEVICE_SIZE * (1 - 1/6);
-  deviceKkokArea.height = DEVICE_SIZE * (1 - 1/6);
-  deviceKkokArea.x = Align.center;
-  deviceKkokArea.y = Align.center;
-  deviceKkokArea.borderRadius = DEVICE_SIZE * (1 - 1/6) / 2;
-
-  deviceSendArea.width = DEVICE_SIZE * (1 - 1/6 - 1/4);
-  deviceSendArea.height = DEVICE_SIZE * (1 - 1/6 - 1/4);
-  deviceSendArea.x = Align.center;
-  deviceSendArea.y = Align.center;
-  deviceSendArea.borderRadius = DEVICE_SIZE * (1 - 1/6 - 1/4) / 2;
-};
-
-let styleBar = function(bar) {
-  bar.width = 2;
-  bar.height = DEVICE_SIZE / 2;
-  bar.x = Align.center;
-  bar.y = Align.top;
-  bar.originX = 0.5;
-  bar.originY = 1;
-};
-
-let moveBar = function(bar) {
-  bar.rotation = 360 * (currentTime % DAY_MILLIS) / DAY_MILLIS;
-};
-
-
-
 // Create kkok function
 
 let createKkok = function(colorIdx, time) {
   let kkok = new Layer({
     parent: device,
+    width: 2,
+    height: DEVICE_SIZE / 2 / 4,
+    x: Align.center,
+    y: Align.top(DEVICE_SIZE / 2 / 6),
+    originX: 0.5,
+    originY: 4 - (4 / 6),
+    rotation: 360 * (time % DAY_MILLIS) / DAY_MILLIS,
     backgroundColor: FAMILY_COLORS[colorIdx],
   });
 
   kkok._data_time = time;
-  styleKkok(kkok);
   kkoks.push(kkok);
 
   let scale;
@@ -142,6 +100,7 @@ let device = new Layer({
   height: DEVICE_SIZE,
   x: Align.center,
   y: Align.center,
+  borderRadius: DEVICE_SIZE/2,
   backgroundColor: "#FFFFFF",
   shadowColor: "#DDDDDD",
   shadowX: 0,
@@ -150,17 +109,31 @@ let device = new Layer({
 });
 let deviceReceiveArea = new Layer({
   parent: device,
+  width: DEVICE_SIZE,
+  height: DEVICE_SIZE,
+  x: Align.center,
+  y: Align.center,
+  borderRadius: DEVICE_SIZE / 2,
   backgroundColor: "#FFFFFF",
 });
 let deviceKkokArea = new Layer({
   parent: device,
+  width: DEVICE_SIZE * (1 - 1/6),
+  height: DEVICE_SIZE * (1 - 1/6),
+  x: Align.center,
+  y: Align.center,
+  borderRadius: DEVICE_SIZE * (1 - 1/6) / 2,
   backgroundColor: "#FFFFFF",
 });
 let deviceSendArea = new Layer({
   parent: device,
+  width: DEVICE_SIZE * (1 - 1/6 - 1/4),
+  height: DEVICE_SIZE * (1 - 1/6 - 1/4),
+  x: Align.center,
+  y: Align.center,
+  borderRadius: DEVICE_SIZE * (1 - 1/6 - 1/4) / 2,
   backgroundColor: "#FFFFFF",
 });
-styleDevice(device, deviceReceiveArea, deviceKkokArea, deviceSendArea);
 if (!IS_TEST) {
   device.onClick(function() {
     createKkok(FAMILY_ID, currentTime);
@@ -178,9 +151,14 @@ if (!IS_TEST) {
 
 let bar = new Layer({
   parent: device,
+  width: 2,
+  height: DEVICE_SIZE / 2,
+  x: Align.center,
+  y: Align.top,
+  originX: 0.5,
+  originY: 1,
   backgroundColor: "#EEEEEE",
 })
-styleBar(bar);
 
 
 
@@ -296,7 +274,7 @@ Utils.interval(1.0/60, function() {
 
   currentTime += timeDiff;
 
-  moveBar(bar);
+  bar.rotation = 360 * (currentTime % DAY_MILLIS) / DAY_MILLIS;
 
   if (autoOn) {
     let t;
