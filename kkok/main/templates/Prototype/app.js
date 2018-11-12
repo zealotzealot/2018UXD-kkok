@@ -7,8 +7,6 @@ const PADDING = 16;
 
 const AUTO_PERIOD = 1000 * 60 * 4;
 
-const STYLE_MODE = 0;
-
 let prevNow = 0;
 let currentTime = 0;
 let lastLoaded = 0;
@@ -46,86 +44,50 @@ timeAreas.sort((a, b) => (a.time - b.time));
 
 
 // Style mode functions
+let styleKkok = function(kkok) {
+  kkok.width = 2;
+  kkok.height = DEVICE_SIZE / 2 / 4;
+  kkok.x = Align.center;
+  kkok.y = Align.top(DEVICE_SIZE / 2 / 6);
+  kkok.originX = 0.5;
+  kkok.originY = 4 - (4 / 6);
+  kkok.rotation = 360 * (kkok._data_time % DAY_MILLIS) / DAY_MILLIS;
+};
 
-let styleKkokList = [
-  function(kkok) {
-    kkok.width = 2;
-    kkok.height = DEVICE_SIZE / 2 / 4;
-    kkok.x = Align.center;
-    kkok.y = Align.top(DEVICE_SIZE / 2 / 6);
-    kkok.originX = 0.5;
-    kkok.originY = 4 - (4 / 6);
-    kkok.rotation = 360 * (kkok._data_time % DAY_MILLIS) / DAY_MILLIS;
-  },
-  function(kkok) {
-    kkok.width = 2;
-    kkok.height = DEVICE_SIZE / 2;
-    kkok.x = Align.left(DEVICE_SIZE * (kkok._data_time % DAY_MILLIS) / DAY_MILLIS);
-    kkok.y = Align.center;
-    kkok.originX = 0.5;
-    kkok.originY = 4;
-    kkok.rotation = 0;
-  },
-];
-let styleKkok = styleKkokList[STYLE_MODE];
+let styleDevice = function(device, deviceReceiveArea, deviceKkokArea, deviceSendArea) {
+  device.borderRadius = DEVICE_SIZE/2;
 
-let styleDeviceList = [
-  function(device, deviceReceiveArea, deviceKkokArea, deviceSendArea) {
-    device.borderRadius = DEVICE_SIZE/2;
+  deviceReceiveArea.width = DEVICE_SIZE;
+  deviceReceiveArea.height = DEVICE_SIZE;
+  deviceReceiveArea.x = Align.center;
+  deviceReceiveArea.y = Align.center;
+  deviceReceiveArea.borderRadius = DEVICE_SIZE / 2;
 
-    deviceReceiveArea.width = DEVICE_SIZE;
-    deviceReceiveArea.height = DEVICE_SIZE;
-    deviceReceiveArea.x = Align.center;
-    deviceReceiveArea.y = Align.center;
-    deviceReceiveArea.borderRadius = DEVICE_SIZE / 2;
+  deviceKkokArea.width = DEVICE_SIZE * (1 - 1/6);
+  deviceKkokArea.height = DEVICE_SIZE * (1 - 1/6);
+  deviceKkokArea.x = Align.center;
+  deviceKkokArea.y = Align.center;
+  deviceKkokArea.borderRadius = DEVICE_SIZE * (1 - 1/6) / 2;
 
-    deviceKkokArea.width = DEVICE_SIZE * (1 - 1/6);
-    deviceKkokArea.height = DEVICE_SIZE * (1 - 1/6);
-    deviceKkokArea.x = Align.center;
-    deviceKkokArea.y = Align.center;
-    deviceKkokArea.borderRadius = DEVICE_SIZE * (1 - 1/6) / 2;
+  deviceSendArea.width = DEVICE_SIZE * (1 - 1/6 - 1/4);
+  deviceSendArea.height = DEVICE_SIZE * (1 - 1/6 - 1/4);
+  deviceSendArea.x = Align.center;
+  deviceSendArea.y = Align.center;
+  deviceSendArea.borderRadius = DEVICE_SIZE * (1 - 1/6 - 1/4) / 2;
+};
 
-    deviceSendArea.width = DEVICE_SIZE * (1 - 1/6 - 1/4);
-    deviceSendArea.height = DEVICE_SIZE * (1 - 1/6 - 1/4);
-    deviceSendArea.x = Align.center;
-    deviceSendArea.y = Align.center;
-    deviceSendArea.borderRadius = DEVICE_SIZE * (1 - 1/6 - 1/4) / 2;
-  },
-  function(device, deviceReceiveArea, deviceKkokArea, deviceSendArea) {
-    device.borderRadius = DEVICE_SIZE/20;
-  },
-]
-let styleDevice = styleDeviceList[STYLE_MODE];
+let styleBar = function(bar) {
+  bar.width = 2;
+  bar.height = DEVICE_SIZE / 2;
+  bar.x = Align.center;
+  bar.y = Align.top;
+  bar.originX = 0.5;
+  bar.originY = 1;
+};
 
-let styleBarList = [
-  function(bar) {
-    bar.width = 2;
-    bar.height = DEVICE_SIZE / 2;
-    bar.x = Align.center;
-    bar.y = Align.top;
-    bar.originX = 0.5;
-    bar.originY = 1;
-  },
-  function(bar) {
-    bar.width = 2;
-    bar.height = DEVICE_SIZE / 1.8;
-    bar.y = Align.center;
-    bar.originX = 0.5;
-    bar.originY = 1;
-    bar.rotation = 0;
-  },
-]
-let styleBar = styleBarList[STYLE_MODE];
-
-let moveBarList = [
-  function(bar) {
-    bar.rotation = 360 * (currentTime % DAY_MILLIS) / DAY_MILLIS;
-  },
-  function(bar) {
-    bar.x = Align.left(DEVICE_SIZE * (currentTime % DAY_MILLIS) / DAY_MILLIS);
-  },
-]
-let moveBar = moveBarList[STYLE_MODE];
+let moveBar = function(bar) {
+  bar.rotation = 360 * (currentTime % DAY_MILLIS) / DAY_MILLIS;
+};
 
 
 
