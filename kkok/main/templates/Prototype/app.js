@@ -47,7 +47,7 @@ timeAreas.sort((a, b) => (a.time - b.time));
 
 let createKkok = function(colorIdx, time) {
   let kkok = new Layer({
-    parent: deviceKkokArea,
+    parent: kkokParent,
     width: 2,
     height: DEVICE_SIZE / 2 / 4,
     x: Align.center,
@@ -116,7 +116,7 @@ let deviceReceiveArea = new Layer({
   borderRadius: DEVICE_SIZE / 2,
   backgroundColor: "#FFFFFF",
 });
-let deviceKkokArea = new Layer({
+let deviceMiddleArea = new Layer({
   parent: device,
   width: DEVICE_SIZE * (1 - 1/6),
   height: DEVICE_SIZE * (1 - 1/6),
@@ -158,6 +158,15 @@ let bar = new Layer({
   originX: 0.5,
   originY: 1,
   backgroundColor: "#EEEEEE",
+})
+
+let kkokParent = new Layer({
+  parent: device,
+  width: DEVICE_SIZE,
+  height: DEVICE_SIZE,
+  x: Align.center,
+  y: Align.center,
+  backgroundColor: "transparent",
 })
 
 
@@ -274,7 +283,7 @@ Utils.interval(1.0/60, function() {
 
   currentTime += timeDiff;
 
-  deviceKkokArea.rotation = -360 * (currentTime % DAY_MILLIS) / DAY_MILLIS;
+  kkokParent.rotation = -360 * (currentTime % DAY_MILLIS) / DAY_MILLIS;
 
   if (autoOn) {
     let t;
