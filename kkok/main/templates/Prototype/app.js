@@ -78,17 +78,31 @@ let createKkok = function(colorIdx, time) {
   let targetArea;
   if (IS_TEST || colorIdx == FAMILY_ID) {
     targetArea = deviceSendArea;
+    nonTargetArea = deviceReceiveArea;
   }
   else {
     targetArea = deviceReceiveArea;
+    nonTargetArea = deviceSendArea;
+  }
+  while (targetArea.animations().length > 0) {
+    targetArea.animations()[0].stop();
+  }
+  while (nonTargetArea.animations().length > 0) {
+    nonTargetArea.animations()[0].stop();
   }
   targetArea.backgroundColor = FAMILY_COLORS[colorIdx];
   targetArea.animate({
     backgroundColor: "FFFFFF",
     options: {
-      time: 0.5 / Math.pow(10, speedSlider.value),
+      time: 30 / Math.pow(10, speedSlider.value),
     }
   });
+  nonTargetArea.animate({
+    backgroundColor: "FFFFFF",
+    options: {
+      time: 0.5 / Math.pow(10, speedSlider.value),
+    }
+  })
 };
 
 
