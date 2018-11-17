@@ -51,7 +51,7 @@ let createKkok = function(colorIdx, time) {
     width: 2,
     height: DEVICE_SIZE / 2 / 4,
     x: Align.center,
-    y: Align.top,
+    y: Align.top(DEVICE_SIZE / 2 / 6),
     originX: 0.5,
     originY: 4 - (4 / 6),
     rotation: 360 * (time % DAY_MILLIS) / DAY_MILLIS,
