@@ -55,7 +55,7 @@
 		<script>
 			{% if kkoks != None %}
 				{% for k in kkoks %}
-			  	createKkok({{ k.family_id }}, {{ k.time }});
+			  	createKkok({{ k.family_id }}, {{ k.time }}, true);
 			  {% endfor %}
 			{% endif %}
 		</script>

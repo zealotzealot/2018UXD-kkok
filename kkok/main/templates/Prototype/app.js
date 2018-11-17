@@ -45,7 +45,7 @@ timeAreas.sort((a, b) => (a.time - b.time));
 
 // Create kkok function
 
-let createKkok = function(colorIdx, time) {
+let createKkok = function(colorIdx, time, noAnimation=false) {
   let kkok = new Layer({
     parent: kkokParent,
     width: 2,
@@ -60,6 +60,9 @@ let createKkok = function(colorIdx, time) {
 
   kkok._data_time = time;
   kkoks.push(kkok);
+
+  if (noAnimation)
+    return;
 
   let scale;
   if (IS_TEST || colorIdx == FAMILY_ID) {
