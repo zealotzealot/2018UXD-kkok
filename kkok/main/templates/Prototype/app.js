@@ -317,17 +317,29 @@ Utils.interval(1.0/60, function() {
 });
 
 let updateCount = 0;
-Utils.interval(1.0/10, function() {
+let UPDATE_PERIOD = 500;
+let UPDATE_GROUPS = 20;
+Utils.interval(UPDATE_PERIOD/1000, function() {
   updateCount++;
 
   for (let i=0; i<kkoks.length; i++) {
     let k = kkoks[i];
 
-    if (k.opacity<0.1 && i%5!=updateCount%5)
+    if (k.opacity<0.1 && i%UPDATE_GROUPS!=updateCount%UPDATE_GROUPS)
       continue;
 
     let timeDiff = (currentTime - k._data_time) / DAY_MILLIS * 24;
-    k.opacity = Math.max(Math.pow(0.9, timeDiff), 0.1*Math.pow(0.995, timeDiff));
+    if (k.opacity < 0.1)
+      timeDiff +=  (UPDATE_PERIOD * Math.pow(10, speedSlider.value)) / DAY_MILLIS * 24;
+    else
+      timeDiff +=  (UPDATE_PERIOD * UPDATE_GROUPS * Math.pow(10, speedSlider.value)) / DAY_MILLIS * 24;
+
+    k.animate({
+      opacity: Math.max(Math.pow(0.9, timeDiff), 0.1*Math.pow(0.995, timeDiff)),
+      options: {
+        time: UPDATE_PERIOD / 1000,
+      },
+    });
   }
   while (kkoks.length > 0) {
     if (kkoks[0].opacity < 0.01) {
