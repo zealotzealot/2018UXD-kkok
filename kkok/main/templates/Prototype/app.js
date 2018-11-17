@@ -109,6 +109,7 @@ let device = new Layer({
 });
 let deviceReceiveArea = new Layer({
   parent: device,
+  index: 10,
   width: DEVICE_SIZE,
   height: DEVICE_SIZE,
   x: Align.center,
@@ -118,6 +119,7 @@ let deviceReceiveArea = new Layer({
 });
 let deviceMiddleArea = new Layer({
   parent: device,
+  index: 11,
   width: DEVICE_SIZE * (1 - 1/6),
   height: DEVICE_SIZE * (1 - 1/6),
   x: Align.center,
@@ -127,6 +129,7 @@ let deviceMiddleArea = new Layer({
 });
 let deviceSendArea = new Layer({
   parent: device,
+  index: 12,
   width: DEVICE_SIZE * (1 - 1/6 - 1/4),
   height: DEVICE_SIZE * (1 - 1/6 - 1/4),
   x: Align.center,
@@ -151,6 +154,7 @@ if (!IS_TEST) {
 
 let bar = new Layer({
   parent: device,
+  index: 20,
   width: 2,
   height: DEVICE_SIZE / 2,
   x: Align.center,
@@ -162,6 +166,7 @@ let bar = new Layer({
 
 let kkokParent = new Layer({
   parent: device,
+  index: 30,
   width: DEVICE_SIZE,
   height: DEVICE_SIZE,
   x: Align.center,
