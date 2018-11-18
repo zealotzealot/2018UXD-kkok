@@ -48,7 +48,7 @@ timeAreas.sort((a, b) => (a.time - b.time));
 
 let kkoks = [];
 let smallKkoks = [];
-let createKkok = function(colorIdx, time, noAnimation=false) {
+let createKkok = function(colorIdx, time, initial=false) {
   let kkok = new Layer({
     parent: kkokParent,
     width: 2,
@@ -63,6 +63,9 @@ let createKkok = function(colorIdx, time, noAnimation=false) {
   kkok._data_time = time;
   kkoks.push(kkok);
 
+  if (initial)
+    return;
+
   let smallKkok = new Layer({
     parent: smallKkokParent,
     width: 2,
@@ -76,9 +79,6 @@ let createKkok = function(colorIdx, time, noAnimation=false) {
   })
   smallKkok._data_time = time;
   smallKkoks.push(smallKkok);
-
-  if (noAnimation)
-    return;
 
   let scale;
   if (IS_TEST || colorIdx == FAMILY_ID) {
@@ -107,7 +107,7 @@ let createKkok = function(colorIdx, time, noAnimation=false) {
     audio.volume = 0.2;
   }
   audio.play();
-  
+
   let targetArea;
   if (IS_TEST || colorIdx == FAMILY_ID) {
     targetArea = deviceSendArea;
