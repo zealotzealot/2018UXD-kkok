@@ -370,6 +370,16 @@ Utils.interval(UPDATE_PERIOD/1000, function() {
     let k = kkoks[i];
     let nextUpdate;
 
+    if (k.scale == 1
+        && kkoks[i-1]
+        && kkoks[i-1].scale == 1
+        && k._data_time - kkoks[i-1]._data_time < 1000 * 10) {
+      kkoks[i-1].destroy();
+      kkoks.splice(i-1, 1);
+      i -= 2;
+      continue;
+    }
+
     if (k.opacity>=0.1)
       nextUpdate = 1;
     else if (i%UPDATE_GROUPS == updateCount%UPDATE_GROUPS)
