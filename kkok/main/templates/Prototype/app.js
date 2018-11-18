@@ -1,5 +1,5 @@
 const DAY_MILLIS = 1000 * 60 * 60 * 24;
-const SMALL_MILLIS = 1000 * 60 * 5;
+const SMALL_MILLIS = 1000 * 60 * 3;
 const FAMILY_COLORS = ["EE66DD", "22CCEE", "EEDD11", "55CC33"];
 
 const DEVICE_SIZE = 504;
@@ -7,8 +7,8 @@ const BUTTON_SIZE = 30;
 const PADDING = 16;
 
 const OUTSIDE_PORTION = 6;
-const KKOK_PORTION = 12;
-const SMALL_KKOK_PORTION = 4;
+const KKOK_PORTION = 9;
+const SMALL_KKOK_PORTION = 6;
 
 const AUTO_PERIOD = 1000 * 60 * 4;
 
