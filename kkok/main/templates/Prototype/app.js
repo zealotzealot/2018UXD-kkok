@@ -358,20 +358,22 @@ Utils.interval(UPDATE_PERIOD/1000, function() {
 
   for (let i=0; i<kkoks.length; i++) {
     let k = kkoks[i];
+    let nextUpdate;
 
-    if (k.opacity<0.1 && i%UPDATE_GROUPS!=updateCount%UPDATE_GROUPS)
+    if (k.opacity>=0.1)
+      nextUpdate = 1;
+    else if (i%UPDATE_GROUPS == updateCount%UPDATE_GROUPS)
+      nextUpdate = UPDATE_GROUPS;
+    else
       continue;
 
     let timeDiff = (currentTime - k._data_time) / DAY_MILLIS * 24;
-    if (k.opacity < 0.1)
-      timeDiff +=  (UPDATE_PERIOD * Math.pow(10, speedSlider.value)) / DAY_MILLIS * 24;
-    else
-      timeDiff +=  (UPDATE_PERIOD * UPDATE_GROUPS * Math.pow(10, speedSlider.value)) / DAY_MILLIS * 24;
+    timeDiff +=  (UPDATE_PERIOD * nextUpdate * Math.pow(10, speedSlider.value)) / DAY_MILLIS * 24;
 
     k.animate({
       opacity: Math.max(Math.pow(0.9, timeDiff), 0.1*Math.pow(0.995, timeDiff)),
       options: {
-        time: UPDATE_PERIOD / 1000,
+        time: UPDATE_PERIOD * nextUpdate / 1000,
       },
     });
   }
