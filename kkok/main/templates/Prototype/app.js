@@ -1,4 +1,5 @@
 const DAY_MILLIS = 1000 * 60 * 60 * 24;
+const SMALL_MILLIS = 1000 * 60 * 5;
 const FAMILY_COLORS = ["EE66DD", "22CCEE", "EEDD11", "55CC33"];
 
 const DEVICE_SIZE = 504;
@@ -45,6 +46,8 @@ timeAreas.sort((a, b) => (a.time - b.time));
 
 // Create kkok function
 
+let kkoks = [];
+let smallKkoks = [];
 let createKkok = function(colorIdx, time, noAnimation=false) {
   let kkok = new Layer({
     parent: kkokParent,
@@ -57,9 +60,22 @@ let createKkok = function(colorIdx, time, noAnimation=false) {
     rotation: 360 * (time % DAY_MILLIS) / DAY_MILLIS,
     backgroundColor: FAMILY_COLORS[colorIdx],
   });
-
   kkok._data_time = time;
   kkoks.push(kkok);
+
+  let smallKkok = new Layer({
+    parent: smallKkokParent,
+    width: 2,
+    height: DEVICE_SIZE / 2 / 12,
+    x: Align.center,
+    y: Align.top(DEVICE_SIZE / 2 / 6 + DEVICE_SIZE / 2 / 4),
+    originX: 0.5,
+    originY: 12 - (12 / 6 + 12 / 4),
+    rotation: 360 * (time % SMALL_MILLIS) / SMALL_MILLIS,
+    backgroundColor: FAMILY_COLORS[colorIdx],
+  })
+  smallKkok._data_time = time;
+  smallKkoks.push(smallKkok);
 
   if (noAnimation)
     return;
@@ -67,11 +83,19 @@ let createKkok = function(colorIdx, time, noAnimation=false) {
   let scale;
   if (IS_TEST || colorIdx == FAMILY_ID) {
     kkok.scale = 0;
+    smallKkok.scale = 0;
   }
   else {
     kkok.scale = 1 / (1 - 1/6);
+    smallKkok.scale = 1 / (1 - 1/6);
   }
   kkok.animate({
+    scale: 1,
+    options: {
+      time: 0.5 / Math.pow(10, speedSlider.value),
+    }
+  })
+  smallKkok.animate({
     scale: 1,
     options: {
       time: 0.5 / Math.pow(10, speedSlider.value),
@@ -147,8 +171,8 @@ let deviceMiddleArea = new Layer({
 let deviceSendArea = new Layer({
   parent: device,
   index: 12,
-  width: DEVICE_SIZE * (1 - 1/6 - 1/4),
-  height: DEVICE_SIZE * (1 - 1/6 - 1/4),
+  width: DEVICE_SIZE * (1 - 1/6 - 1/4 - 1/12),
+  height: DEVICE_SIZE * (1 - 1/6 - 1/4 - 1/12),
   x: Align.center,
   y: Align.center,
   borderRadius: DEVICE_SIZE * (1 - 1/6 - 1/4) / 2,
@@ -184,6 +208,16 @@ let bar = new Layer({
 let kkokParent = new Layer({
   parent: device,
   index: 30,
+  width: DEVICE_SIZE,
+  height: DEVICE_SIZE,
+  x: Align.center,
+  y: Align.center,
+  backgroundColor: "transparent",
+})
+
+let smallKkokParent = new Layer({
+  parent: device,
+  index: 31,
   width: DEVICE_SIZE,
   height: DEVICE_SIZE,
   x: Align.center,
@@ -229,7 +263,6 @@ autoButton.onClick(function() {
   }
 });
 
-let kkoks = [];
 let kkokButtons = [];
 for (let i=0; i<FAMILY_COLORS.length; i++) {
 
@@ -306,6 +339,7 @@ Utils.interval(1.0/60, function() {
   currentTime += timeDiff;
 
   kkokParent.rotation = -360 * (currentTime % DAY_MILLIS) / DAY_MILLIS;
+  smallKkokParent.rotation = -360 * (currentTime % SMALL_MILLIS) / SMALL_MILLIS;
 
   if (autoOn) {
     let t;
@@ -345,6 +379,28 @@ Utils.interval(UPDATE_PERIOD/1000, function() {
     if (kkoks[0].opacity < 0.01) {
       kkoks[0].destroy();
       kkoks.shift();
+    }
+    else
+      break;
+  }
+
+  for (let i=0; i<smallKkoks.length; i++) {
+    let k = smallKkoks[i];
+
+    let timeDiff = (currentTime - k._data_time) / SMALL_MILLIS * 24;
+    timeDiff +=  (UPDATE_PERIOD * Math.pow(10, speedSlider.value)) / SMALL_MILLIS * 24;
+
+    k.animate({
+      opacity: Math.pow(0.85, timeDiff),
+      options: {
+        time: UPDATE_PERIOD / 1000,
+      },
+    });
+  }
+  while (smallKkoks.length > 0) {
+    if (smallKkoks[0].opacity < 0.01) {
+      smallKkoks[0].destroy();
+      smallKkoks.shift();
     }
     else
       break;
