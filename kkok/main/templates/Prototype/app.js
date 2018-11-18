@@ -428,7 +428,7 @@ if (!IS_TEST) {
       success: function(data) {
         for (let i=0; i<data.length; i++) {
           let d = data[i];
-          createKkok(d.family_id, d.time);
+          createKkok(d.family_id, currentTime);
           if (d.time > lastLoaded)
             lastLoaded = d.time+1;
         }
