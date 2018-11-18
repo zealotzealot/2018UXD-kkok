@@ -379,21 +379,20 @@ Utils.interval(UPDATE_PERIOD/1000, function() {
 
     let timeDiff = (currentTime - k._data_time) / DAY_MILLIS * 24;
     timeDiff +=  (UPDATE_PERIOD * nextUpdate * Math.pow(10, speedSlider.value)) / DAY_MILLIS * 24;
+    let opacity = Math.max(Math.pow(0.9, timeDiff), 0.1*Math.pow(0.995, timeDiff));
 
+    if (opacity < 0.01) {
+      k.destroy();
+      kkoks.splice(i, 1);
+      i--;
+      continue;
+    }
     k.animate({
-      opacity: Math.max(Math.pow(0.9, timeDiff), 0.1*Math.pow(0.995, timeDiff)),
+      opacity: opacity,
       options: {
         time: UPDATE_PERIOD * nextUpdate / 1000,
       },
     });
-  }
-  while (kkoks.length > 0) {
-    if (kkoks[0].opacity < 0.01) {
-      kkoks[0].destroy();
-      kkoks.shift();
-    }
-    else
-      break;
   }
 
   for (let i=0; i<smallKkoks.length; i++) {
@@ -401,21 +400,20 @@ Utils.interval(UPDATE_PERIOD/1000, function() {
 
     let timeDiff = (currentTime - k._data_time) / SMALL_MILLIS * 24;
     timeDiff +=  (UPDATE_PERIOD * Math.pow(10, speedSlider.value)) / SMALL_MILLIS * 24;
+    let opacity = Math.pow(0.85, timeDiff);
 
+    if (opacity < 0.01) {
+      k.destroy();
+      smallKkoks.splice(i, 1);
+      i--;
+      continue;
+    }
     k.animate({
-      opacity: Math.pow(0.85, timeDiff),
+      opacity: opacity,
       options: {
         time: UPDATE_PERIOD / 1000,
       },
     });
-  }
-  while (smallKkoks.length > 0) {
-    if (smallKkoks[0].opacity < 0.01) {
-      smallKkoks[0].destroy();
-      smallKkoks.shift();
-    }
-    else
-      break;
   }
 });
 
