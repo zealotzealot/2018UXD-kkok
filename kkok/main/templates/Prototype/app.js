@@ -102,6 +102,12 @@ let createKkok = function(colorIdx, time, noAnimation=false) {
     }
   })
 
+  let audio = new Audio("/static/light.mp3");
+  if (kkoks[kkoks.length-2]!==undefined && kkoks[kkoks.length-2].backgroundColor.color===kkok.backgroundColor.color) {
+    audio.volume = 0.2;
+  }
+  audio.play();
+  
   let targetArea;
   if (IS_TEST || colorIdx == FAMILY_ID) {
     targetArea = deviceSendArea;
