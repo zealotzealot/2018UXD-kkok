@@ -7,8 +7,8 @@ const BUTTON_SIZE = 30;
 const PADDING = 16;
 
 const OUTSIDE_PORTION = 6;
-const KKOK_PORTION = 4;
-const SMALL_KKOK_PORTION = 12;
+const KKOK_PORTION = 12;
+const SMALL_KKOK_PORTION = 4;
 
 const AUTO_PERIOD = 1000 * 60 * 4;
 
@@ -58,9 +58,9 @@ let createKkok = function(colorIdx, time, initial=false) {
     width: 2,
     height: DEVICE_SIZE / 2 / KKOK_PORTION,
     x: Align.center,
-    y: Align.top(DEVICE_SIZE / 2 / OUTSIDE_PORTION),
+    y: Align.top(DEVICE_SIZE / 2 / OUTSIDE_PORTION + DEVICE_SIZE / 2 / SMALL_KKOK_PORTION),
     originX: 0.5,
-    originY: KKOK_PORTION - (KKOK_PORTION / OUTSIDE_PORTION),
+    originY: KKOK_PORTION - (KKOK_PORTION / OUTSIDE_PORTION + KKOK_PORTION / SMALL_KKOK_PORTION),
     rotation: 360 * (time % DAY_MILLIS) / DAY_MILLIS,
     backgroundColor: FAMILY_COLORS[colorIdx],
   });
@@ -72,9 +72,9 @@ let createKkok = function(colorIdx, time, initial=false) {
     width: 2,
     height: DEVICE_SIZE / 2 / SMALL_KKOK_PORTION,
     x: Align.center,
-    y: Align.top(DEVICE_SIZE / 2 / OUTSIDE_PORTION + DEVICE_SIZE / 2 / KKOK_PORTION),
+    y: Align.top(DEVICE_SIZE / 2 / OUTSIDE_PORTION),
     originX: 0.5,
-    originY: SMALL_KKOK_PORTION - (SMALL_KKOK_PORTION / OUTSIDE_PORTION + SMALL_KKOK_PORTION / KKOK_PORTION),
+    originY: SMALL_KKOK_PORTION - (SMALL_KKOK_PORTION / OUTSIDE_PORTION),
     rotation: 360 * (time % SMALL_MILLIS) / SMALL_MILLIS,
     backgroundColor: FAMILY_COLORS[colorIdx],
   })
