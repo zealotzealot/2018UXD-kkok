@@ -67,9 +67,6 @@ let createKkok = function(colorIdx, time, initial=false) {
   kkok._data_time = time;
   kkoks.push(kkok);
 
-  if (initial)
-    return;
-
   let smallKkok = new Layer({
     parent: smallKkokParent,
     width: 2,
@@ -83,6 +80,9 @@ let createKkok = function(colorIdx, time, initial=false) {
   })
   smallKkok._data_time = time;
   smallKkoks.push(smallKkok);
+
+  if (initial)
+    return;
 
   let scale;
   if (IS_TEST || colorIdx == FAMILY_ID) {
